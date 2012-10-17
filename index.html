@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'/>
+		<title>ColorBox Examples</title>
+		
+		<link rel="stylesheet" href="colorbox.css" />
+		<link rel="stylesheet" href="fb-image-loader.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="js/colorbox/jquery.colorbox.js"></script>
+		<script src="js/fb-image-loader.js"></script>
+		<script>
+			$(document).ready(function(){
+								
+				$('#photoalbum1').wubFBAlbums('onealbum', {'albumID' : '10150422026650017',
+														   'coverWrapper' : '<div class = "albumholder"><div class = "albumimg"><a href = "%(url)" class = "%(classname)" title = "%(caption)"><img src = "%(url)" alt = "%(caption)" /></a></div><div class = "albumname">%(albumcaption)</div></div>',
+														   'photoWrapper' : '<a href = "%(url)" class = "%(classname)" title = "%(caption)"></a>',
+														   'onAlbumComplete' : function(htmlObj, classname){
+																
+																			htmlObj.find('.'+classname).colorbox({'rel': classname});
+																		}});
+				
+				
+				$('#allalbum').wubFBAlbums('allalbums',{'pageName' : 'wubbleyou',
+														'coverWrapper' : '<div class = "albumholder"><div class = "albumimg"><a href = "%(url)" class = "%(classname)" title = "%(caption)"><img src = "%(url)" alt = "%(caption)" /></a></div><div class = "albumname">%(albumcaption)</div></div>',
+														'photoWrapper' : '<a href = "%(url)" class = "%(classname)" title = "%(caption)"></a>',
+														'onAlbumComplete' : function(htmlObj, classname){
+																
+																			htmlObj.find('.'+classname).colorbox({'rel': classname});
+																		}});
+				
+			});
+		</script>
+	</head>
+	<body>
+		<h1>Wub FB Album Demos</h1>
+		
+		<p>A plugin to retrieve and order Facebook albums from specified pages.  This example utilises Wub FBAlbums and Colorbox to autoimatically retreive and display photo albums.</p>
+		
+		
+		<h2>Individual album specified by an album ID</h2>
+		<div id = "photoalbum1"></div>
+		
+		
+		<div class = "spacer"><br /><br /><br /></div>
+		
+		<h2>Automatically retrieve and display ann page's FB albums</h2>
+		<div id = "allalbum"></div>
+		
+		
+	</body>
+</html>
