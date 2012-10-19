@@ -1,3 +1,13 @@
+/**
+*
+* WubFBAlbum v1.0 - JQuery Plugin
+* 
+* License: http://www.opensource.org/licenses/mit-license.php
+* (c) Mark Renney, www.wubbleyou.co.uk
+* 17/10/2012
+*
+**/
+
 
 (function( $ ){
 
@@ -16,7 +26,15 @@
 			
 		var fburl = "https://graph.facebook.com/"+settings.pageName+'/albums';
 		
-		$.getJSON(fburl, function(data){
+		
+		$.ajax({
+		
+			type: 'GET',
+			url: fburl,
+			dataType: 'jsonp',
+			async: settings.async,
+			success: function(data) { 
+		
 		
 			$.each(data["data"], function() {
 			
@@ -32,7 +50,7 @@
 			
 			});
 			
-		});
+		}});
 		
 		return this;
     },
@@ -59,12 +77,11 @@
 		
 		var success = true;
 		
-		
 		$.ajax({
 		
 			type: 'GET',
 			url: fburl,
-			dataType: 'json',
+			dataType: 'jsonp',
 			async: albumSettings.async,
 			success: function(data) { 
 
@@ -79,8 +96,6 @@
 					
 				classCounter++;	
 			}
-			
-			
 			
 			$.each(data['photos']["data"], function() {
 			
@@ -146,10 +161,12 @@
     settings = $.extend( {
       'albumID'  : '',
       'pageName' : '',
-	  'coverWrapper' : '<div class = "albumholder"><div class = "albumimg"><a href = "%(url)" class = "%(classname)" title = "%(caption)"><img src = "%(url)" alt = "%(caption)" /></a></div><div class = "albumname">%(albumcaption)</div></div>',
-	  'photoWrapper' : '<a href = "%(url)" class = "%(classname)" title = "%(caption)"></a>',
-	  'classPreq' : 'wubFB',
-	  'async' : 'true'
+	  'coverWrapper' : '<div class = "albumholder"><div class = "albumimg">' //The wrapper for our album cover photo
+						+'<a href = "%(url)" class = "%(classname)" title = "%(caption)"><img src = "%(url)" alt = "%(caption)" /></a></div>'
+						+'<div class = "albumname">%(albumcaption)</div></div>',
+	  'photoWrapper' : '<a href = "%(url)" class = "%(classname)" title = "%(caption)"></a>', //Wrapper for each photo
+	  'classPreq' : 'wubFB', //The class name to precede each set of album photos
+	  'async' : 'true' //When firing ajax requests whether to use async or not
     }, options);
  
 	 // Method calling logic

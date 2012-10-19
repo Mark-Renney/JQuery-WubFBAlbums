@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset='utf-8'/>
-		<title>ColorBox Examples</title>
+		<title>Wubbleyou Facebook Album Plug-In</title>
 		
 		<link rel="stylesheet" href="colorbox.css" />
 		<link rel="stylesheet" href="fb-image-loader.css" />
@@ -13,16 +13,15 @@
 			$(document).ready(function(){
 								
 				$('#photoalbum1').wubFBAlbums('onealbum', {'albumID' : '10150422026650017',
-														   'coverWrapper' : '<div class = "albumholder"><div class = "albumimg"><a href = "%(url)" class = "%(classname)" title = "%(caption)"><img src = "%(url)" alt = "%(caption)" /></a></div><div class = "albumname">%(albumcaption)</div></div>',
+														   'coverWrapper' : '<div class = "albumholder" style="style="width:150px; min-height:180px;"><a href = "%(url)" class = "%(classname)" title = "%(caption)"><div class = "albumimg" style = "background-image:url(\'%(url)\'); height:150px; width:150px;"></div></a><div class = "albumname">%(albumcaption)</div></div>',
 														   'photoWrapper' : '<a href = "%(url)" class = "%(classname)" title = "%(caption)"></a>',
 														   'onAlbumComplete' : function(htmlObj, classname){
 																
 																			htmlObj.find('.'+classname).colorbox({'rel': classname});
 																		}});
-				
-				
+							
 				$('#allalbum').wubFBAlbums('allalbums',{'pageName' : 'wubbleyou',
-														'coverWrapper' : '<div class = "albumholder"><div class = "albumimg"><a href = "%(url)" class = "%(classname)" title = "%(caption)"><img src = "%(url)" alt = "%(caption)" /></a></div><div class = "albumname">%(albumcaption)</div></div>',
+														'coverWrapper' : '<div class = "albumholder" style="width:150px; min-height:180px;"><a href = "%(url)" class = "%(classname)" title = "%(caption)"><div class = "albumimg" style = "background-image:url(\'%(url)\'); height:150px; width:150px;"></div></a><div class = "albumname">%(albumcaption)</div></div>',
 														'photoWrapper' : '<a href = "%(url)" class = "%(classname)" title = "%(caption)"></a>',
 														'onAlbumComplete' : function(htmlObj, classname){
 																
@@ -31,22 +30,88 @@
 				
 			});
 		</script>
+		
+		<style>
+		
+			body{
+				font:12px/1.2 Verdana, Arial, sans-serif; 
+				padding:0 10px;
+				background: #00ff00 url('images/lghtmesh.png') repeat; 
+			}
+
+			h1, h2 {
+				text-shadow: 0 1px 0 #CFCFCF;
+				color:#3a095c;
+				padding:10px 0 0 0;
+			}
+
+			img a:link, img a:active, img a:visited, img a:hover{
+				text-decoration:none;
+			}
+
+			a:link, a:active, a:visited {
+				text-decoration:none;
+				color:#3a095c;
+			}
+
+			a:hover {
+				color:#79618a;
+			}
+
+			.spacer{
+				clear:both;
+				width:100%;
+				overflow:hidden;
+				max-height:10px;
+				border-bottom:1px dashed #777;
+				padding:10px 0 0 0;
+			}
+
+			#cboxLoadedContent {
+				clear:both;
+			}
+
+
+			#photoalbum1{
+				float:left;
+				width:100%;
+				min-height:250px;
+				clear:both;
+			}
+
+			#allalbum{
+				float:left;
+				width:100%;
+				min-height:250px;
+				clear:both;
+			}
+
+		
+		</style>
+		
+		
 	</head>
 	<body>
 		<h1>Wub FB Album Demos</h1>
 		
-		<p>A plugin to retrieve and order Facebook albums from specified pages.  This example utilises Wub FBAlbums and Colorbox to autoimatically retreive and display photo albums.</p>
+		<p>A plugin to retrieve and order Facebook albums from specified pages.  This example utilises Wub FBAlbums and <a href = "http://www.jacklmoore.com/colorbox">Colorbox</a> to automatically retrieve and display photo albums.</p>
 		
-		
+		<div class = "spacer">&nbsp;</div>
+				
 		<h2>Individual album specified by an album ID</h2>
 		<div id = "photoalbum1"></div>
+		<div id = "photoalbum2"></div>
+		<div id = "photoalbum3"></div>
+		<div id = "photoalbum4"></div>
+			
+		<div class = "spacer">&nbsp;</div>
 		
-		
-		<div class = "spacer"><br /><br /><br /></div>
-		
-		<h2>Automatically retrieve and display ann page's FB albums</h2>
+		<h2>Automatically retrieve and display a page's FB albums</h2>
 		<div id = "allalbum"></div>
 		
+		<div class = "spacer">&nbsp;</div>	
 		
+		<p>This plugin is licensed under MIT (http://www.opensource.org/licenses/mit-license.php). For more details about the plugin or to get in touch with <a href = "http://www.wubbleyou.co.uk">Wubbleyou Ltd</a>, please contact us at: <a href="mailto:contact@wubbleyou.co.uk">contact@wubbleyou.co.uk</a>.</p>
+		<p><a href = "http://www.jacklmoore.com/colorbox">Colorbox</a> is not owned by, nor affiliated with Wubbleyou or Mark Renney in anyway, it's just a cool plugin also under MIT :)</p>
 	</body>
 </html>
