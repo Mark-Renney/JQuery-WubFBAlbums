@@ -35,20 +35,24 @@
 			async: settings.async,
 			success: function(data) { 
 		
+			//Make sure we have valid data
+			if(typeof data['data'] != 'undefined'){
 		
-			$.each(data["data"], function() {
-			
-				var albumSettings = settings;
-				albumSettings.albumID = this['id'];
+				$.each(data["data"], function() {
 				
-				var albumObj = $('<div></div>').addClass('newclass');
-								
-				if(displayAlbum(albumObj, albumSettings)){
-								
-					$(htmlObj).append(albumObj);
-				}
+					var albumSettings = settings;
+					albumSettings.albumID = this['id'];
+					
+					var albumObj = $('<div></div>').addClass('newclass');
+									
+					if(displayAlbum(albumObj, albumSettings)){
+									
+						$(htmlObj).append(albumObj);
+					}
+				
+				});
 			
-			});
+			}
 			
 		}});
 		
@@ -97,57 +101,64 @@
 				classCounter++;	
 			}
 			
-			$.each(data['photos']["data"], function() {
+			//Make sure we have valid data
+			if(typeof data['photos'] != 'undefined' && typeof data['photos']["data"] != 'undefined'){
 			
-				//Determine the vars we are going to replace
-				var strVars = {
+				$.each(data['photos']["data"], function() {
 				
-					caption : (this['name'] != undefined ? this['name'] : '' ),
-					url : this['source'],
-					classname : classname,
-					albumcaption : (data['name'] != undefined ? data['name'] : '' ),
-				}
-				
-				if(albumSettings.photowrapper != '' && strVars.url != undefined){
+					//Determine the vars we are going to replace
+					var strVars = {
 					
-					//if we have located the cover photo use the cover wrapper
-					var cover = (data['cover_photo'] != undefined 
-									&& this['id'] != undefined 
-									&& this['id'] == data['cover_photo'] ? true : false );
-					
-					
-					//Replace our tokens with the strVars
-					var tmpOutStr = (cover ? albumSettings.coverWrapper : albumSettings.photoWrapper).replace(/\%\(\w+\)/g, function(s, key) { 
-					
-																			s = s.replace('%(', '').replace(')', '');
-																			//Make sure we prevent XSS - probably a better/faster way than this
-																			return (strVars[s] != undefined ? $('<div />').text(strVars[s]).html() : s ); 	
-																		});	
-
-					if(cover){
-					
-						outStr = tmpOutStr + outStr;
+						caption : (this['name'] != undefined ? this['name'] : '' ),
+						url : this['source'],
+						classname : classname,
+						albumcaption : (data['name'] != undefined ? data['name'] : '' ),
 					}
-					else{
 					
-						outStr += tmpOutStr;
-					}											
-				}
+					if(albumSettings.photowrapper != '' && strVars.url != undefined){
+						
+						//if we have located the cover photo use the cover wrapper
+						var cover = (data['cover_photo'] != undefined 
+										&& this['id'] != undefined 
+										&& this['id'] == data['cover_photo'] ? true : false );
+						
+						
+						//Replace our tokens with the strVars
+						var tmpOutStr = (cover ? albumSettings.coverWrapper : albumSettings.photoWrapper).replace(/\%\(\w+\)/g, function(s, key) { 
+						
+																				s = s.replace('%(', '').replace(')', '');
+																				//Make sure we prevent XSS - probably a better/faster way than this
+																				return (strVars[s] != undefined ? $('<div />').text(strVars[s]).html() : s ); 	
+																			});	
+	
+						if(cover){
+						
+							outStr = tmpOutStr + outStr;
+						}
+						else{
+						
+							outStr += tmpOutStr;
+						}											
+					}
+					
+				});
 				
-			});
+				//finally append our new html
+				$.each(htmlObj, function() {
+					
+					$(this).html(outStr);
+				});
+				
+				if($.isFunction( albumSettings.onAlbumComplete ))
+					albumSettings.onAlbumComplete(htmlObj, classname);
+					
+				
+					
+				success = true;
+				
+			}
 			
-			//finally append our new html
-			$.each(htmlObj, function() {
-				
-				$(this).html(outStr);
-			});
-			
-			if($.isFunction( albumSettings.onAlbumComplete ))
-				albumSettings.onAlbumComplete(htmlObj, classname);
-				
-			
-				
-			success = true;
+			success = false;
 		}});
   
   
@@ -167,6 +178,7 @@
 	  'photoWrapper' : '<a href = "%(url)" class = "%(classname)" title = "%(caption)"></a>', //Wrapper for each photo
 	  'classPreq' : 'wubFB', //The class name to precede each set of album photos
 	  'async' : 'true' //When firing ajax requests whether to use async or not
+
     }, options);
  
 	 // Method calling logic
