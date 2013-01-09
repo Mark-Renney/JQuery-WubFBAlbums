@@ -75,7 +75,7 @@
 		if(albumSettings.albumID == '')
 			return false;
 	
-		var fburl = "https://graph.facebook.com/"+albumSettings.albumID+"?fields=photos,cover_photo,name";
+		var fburl = "https://graph.facebook.com/"+albumSettings.albumID+"?fields=photos.limit(200),cover_photo,name";
 		var outStr = '';
 		var outStrCover = '';
 		
